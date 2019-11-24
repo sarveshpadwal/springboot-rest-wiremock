@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PetController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">springboot-rest-wiremock</a> &gt; <a href="index.source.html" class="el_package">com.petstore.web.controller</a> &gt; <span class="el_source">PetController.java</span></div><h1>PetController.java</h1><pre class="source lang-java linenums">package com.petstore.web.controller;
+
+import com.petstore.constant.Status;
+import com.petstore.dto.Pet;
+import com.petstore.dto.Response;
+import com.petstore.service.PetService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
+import javax.validation.constraints.Pattern;
+import java.util.List;
+
+/**
+ * Bundles all APIs for Pet.
+ *
+ * @author sarvesh
+ * @version 0.0.1
+ * @since 0.0.1
+ */
+@Api(tags = &quot;All APIs for Pet&quot;)
+@RestController
+@RequestMapping(&quot;/api/v1/pet&quot;)
+@Validated
+<span class="nc" id="L33">public class PetController {</span>
+
+    @Autowired
+    private PetService petService;
+
+    @ApiOperation(value = &quot;Get list of Pets by status&quot;, produces = &quot;application/json&quot;)
+    @GetMapping(&quot;/byStatus&quot;)
+    public Response&lt;List&lt;Pet&gt;&gt; getPetsByStatus(
+        @ApiParam(value = &quot;Pet status for which all pets will be retrieved&quot;,
+            allowableValues = &quot;available,pending,sold&quot;, required = true)
+        @Valid @Pattern(regexp = &quot;available|pending|sold&quot;, message = &quot;1004&quot;)
+        @RequestParam(value = &quot;status&quot;) String status,
+        @ApiParam(value = &quot;boolean flag to get mock response instead of actual PetStore API response&quot;,
+            required = false)
+        @RequestParam(value = &quot;mockResponse&quot;, required = false) boolean mockResponse) {
+<span class="nc" id="L48">        List&lt;Pet&gt; pets = petService.getPetsByStatus(status, mockResponse);</span>
+<span class="nc" id="L49">        return new Response&lt;&gt;(Status.SUCCESS, HttpStatus.OK.value(), pets);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

@@ -1,0 +1,4 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+springboot-rest-wiremock,com.petstore.service.impl,PetServiceImpl,99,0,2,0,24,0,5,0,4,0
+springboot-rest-wiremock,com.petstore.service.impl,PetServiceImpl.new ParameterizedTypeReference() {...},6,0,0,0,1,0,1,0,1,0
+springboot-rest-wiremock,com.petstore.web.controller,PetController,18,0,0,0,3,0,2,0,2,0
