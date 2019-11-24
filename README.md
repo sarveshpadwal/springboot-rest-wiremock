@@ -1,3 +1,4 @@
+# Project is demo for springboot-rest-wiremock
 # Spring Boot Guidelines
 This spring boot project has covered standard coding practices.
 ## Things covered in this project
@@ -5,10 +6,8 @@ This spring boot project has covered standard coding practices.
 
 ## Prerequisites
 * Java 11
-* Eclipse 2019-03
-* Eclipse Plugins
+* Ide Plugins
     * Sonarlint
-    * STS 4
     * editorconfig
     * lombok
 
@@ -18,12 +17,9 @@ This spring boot project has covered standard coding practices.
 * Log4J2: for logging with roll out configuration
 * Junit5: for Unit Testing
 * Lombok: It is a java library that automatically plugs into your editor and build tools, spicing up your java
-* flyway: for database migration and versioning
 
 ## Setting up Dev
-1. Clone the repository with SSH - git clone https://github.com/sarvya521/springboot-boilerplate.git
-2. Import eclipse code formatter - Refer java-code-format.md
-3. Install Lombok, Refer lombok-plugin.md
+1. Clone the repository with SSH - git clone https://github.com/sarvya521/springboot-rest-wiremock.git
 
 ### Build
 Create a maven goal in eclipse using below steps.

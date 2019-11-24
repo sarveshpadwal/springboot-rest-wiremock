@@ -23,7 +23,7 @@ import java.util.List;
 @ApiModel(description = "All details about the pet.")
 public class Pet {
     @ApiModelProperty(notes = "The id of the pet", position = 0)
-    private Integer id;
+    private Long id;
 
     @ApiModelProperty(notes = "The category of the pet", position = 1)
     private Category category;

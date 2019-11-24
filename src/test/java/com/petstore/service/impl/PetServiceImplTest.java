@@ -1,5 +1,6 @@
 package com.petstore.service.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.petstore.config.ErrorMessageSourceConfig;
 import com.petstore.dto.Category;
 import com.petstore.dto.Pet;
@@ -33,6 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 /**
  * @author sarvesh
  * @version 0.0.1
+ *
  * @since 0.0.1
  */
 @ExtendWith(SpringExtension.class)
@@ -51,7 +53,7 @@ class PetServiceImplTest {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        petService = new PetServiceImpl(restTemplate);
+        petService = new PetServiceImpl(restTemplate, new ObjectMapper());
 
         ReflectionTestUtils.setField(petService, "getPetsByStatusApiUri", GET_PETS_BY_STATUS_API_URI_MOCK);
     }
@@ -151,21 +153,21 @@ class PetServiceImplTest {
 
     private Pet preparePetForStatus(String status) {
         Pet pet = new Pet();
-        pet.setId(1);
+        pet.setId(1L);
         pet.setName("jack");
         pet.setStatus(status);
         pet.setPhotoUrls(List.of("https://photo.url.one", "https://photo.url.two"));
 
         Category category = new Category();
-        category.setId(1);
+        category.setId(1L);
         category.setName("cat1");
         pet.setCategory(category);
 
         Tag tag1 = new Tag();
-        tag1.setId(1);
+        tag1.setId(1L);
         tag1.setName("tag1");
         Tag tag2 = new Tag();
-        tag2.setId(1);
+        tag2.setId(2L);
         tag2.setName("tag2");
         pet.setTags(List.of(tag1, tag2));
 

@@ -72,6 +72,8 @@ public class PetControllerTest {
     @Autowired
     private LocalValidatorFactoryBean validator;
 
+    private static final boolean MOCK_RESPONSE = false;
+
     /**
      * Setup for before each test case
      */
@@ -94,7 +96,7 @@ public class PetControllerTest {
         /*********** Setup ************/
         String status = "available";
         Pet pet = preparePetForStatus(status);
-        Mockito.when(petService.getPetsByStatus(status)).thenReturn(List.of(pet));
+        Mockito.when(petService.getPetsByStatus(status, MOCK_RESPONSE)).thenReturn(List.of(pet));
 
         /*********** Execute ************/
         mockMvc.perform(get("/api/v1/pet/byStatus?status=" + status)
@@ -103,17 +105,17 @@ public class PetControllerTest {
             .andExpect(jsonPath("$.status", is(SUCCESS.name())))
             .andExpect(jsonPath("$.code", is(200)))
             .andExpect(jsonPath("$.data", hasSize(1)))
-            .andExpect(jsonPath("$.data[0].id", is(pet.getId())))
+            .andExpect(jsonPath("$.data[0].id", is(1)))
             .andExpect(jsonPath("$.data[0].name", is(pet.getName())))
             .andExpect(jsonPath("$.data[0].status", is(status)))
             .andExpect(jsonPath("$.data[0].photoUrls", hasSize(pet.getPhotoUrls().size())))
             .andExpect(jsonPath("$.data[0].tags", hasSize(pet.getTags().size())))
-            .andExpect(jsonPath("$.data[0].category.id", is(pet.getCategory().getId())))
+            .andExpect(jsonPath("$.data[0].category.id", is(1)))
             .andExpect(jsonPath("$.data[0].category.name", is(pet.getCategory().getName())))
             .andExpect(jsonPath("$.errors").doesNotExist());
 
         /*********** Verify/Assertions ************/
-        verify(petService, times(1)).getPetsByStatus(status);
+        verify(petService, times(1)).getPetsByStatus(status, MOCK_RESPONSE);
         verifyNoMoreInteractions(petService);
     }
 
@@ -126,7 +128,7 @@ public class PetControllerTest {
         /*********** Setup ************/
         String status = "pending";
         Pet pet = preparePetForStatus(status);
-        Mockito.when(petService.getPetsByStatus(status)).thenReturn(List.of(pet));
+        Mockito.when(petService.getPetsByStatus(status, MOCK_RESPONSE)).thenReturn(List.of(pet));
 
         /*********** Execute ************/
         mockMvc.perform(get("/api/v1/pet/byStatus?status=" + status)
@@ -135,17 +137,17 @@ public class PetControllerTest {
             .andExpect(jsonPath("$.status", is(SUCCESS.name())))
             .andExpect(jsonPath("$.code", is(200)))
             .andExpect(jsonPath("$.data", hasSize(1)))
-            .andExpect(jsonPath("$.data[0].id", is(pet.getId())))
+            .andExpect(jsonPath("$.data[0].id", is(1)))
             .andExpect(jsonPath("$.data[0].name", is(pet.getName())))
             .andExpect(jsonPath("$.data[0].status", is(status)))
             .andExpect(jsonPath("$.data[0].photoUrls", hasSize(pet.getPhotoUrls().size())))
             .andExpect(jsonPath("$.data[0].tags", hasSize(pet.getTags().size())))
-            .andExpect(jsonPath("$.data[0].category.id", is(pet.getCategory().getId())))
+            .andExpect(jsonPath("$.data[0].category.id", is(1)))
             .andExpect(jsonPath("$.data[0].category.name", is(pet.getCategory().getName())))
             .andExpect(jsonPath("$.errors").doesNotExist());
 
         /*********** Verify/Assertions ************/
-        verify(petService, times(1)).getPetsByStatus(status);
+        verify(petService, times(1)).getPetsByStatus(status, MOCK_RESPONSE);
         verifyNoMoreInteractions(petService);
     }
 
@@ -154,7 +156,7 @@ public class PetControllerTest {
         /*********** Setup ************/
         String status = "sold";
         Pet pet = preparePetForStatus(status);
-        Mockito.when(petService.getPetsByStatus(status)).thenReturn(List.of(pet));
+        Mockito.when(petService.getPetsByStatus(status, MOCK_RESPONSE)).thenReturn(List.of(pet));
 
         /*********** Execute ************/
         mockMvc.perform(get("/api/v1/pet/byStatus?status=" + status)
@@ -163,17 +165,17 @@ public class PetControllerTest {
             .andExpect(jsonPath("$.status", is(SUCCESS.name())))
             .andExpect(jsonPath("$.code", is(200)))
             .andExpect(jsonPath("$.data", hasSize(1)))
-            .andExpect(jsonPath("$.data[0].id", is(pet.getId())))
+            .andExpect(jsonPath("$.data[0].id", is(1)))
             .andExpect(jsonPath("$.data[0].name", is(pet.getName())))
             .andExpect(jsonPath("$.data[0].status", is(status)))
             .andExpect(jsonPath("$.data[0].photoUrls", hasSize(pet.getPhotoUrls().size())))
             .andExpect(jsonPath("$.data[0].tags", hasSize(pet.getTags().size())))
-            .andExpect(jsonPath("$.data[0].category.id", is(pet.getCategory().getId())))
+            .andExpect(jsonPath("$.data[0].category.id", is(1)))
             .andExpect(jsonPath("$.data[0].category.name", is(pet.getCategory().getName())))
             .andExpect(jsonPath("$.errors").doesNotExist());
 
         /*********** Verify/Assertions ************/
-        verify(petService, times(1)).getPetsByStatus(status);
+        verify(petService, times(1)).getPetsByStatus(status, MOCK_RESPONSE);
         verifyNoMoreInteractions(petService);
     }
 
@@ -207,8 +209,8 @@ public class PetControllerTest {
     void getPetsByStatus_shouldThrow_PetStoreApiException() throws Exception {
         /*********** Setup ************/
         String status = "sold";
-        Mockito.when(petService.getPetsByStatus(status)).thenThrow(new PetStoreApiException("getPetsByStatus",
-            new RuntimeException()));
+        Mockito.when(petService.getPetsByStatus(status, MOCK_RESPONSE))
+            .thenThrow(new PetStoreApiException("getPetsByStatus", new RuntimeException()));
         /*********** Execute ************/
         mockMvc.perform(get("/api/v1/pet/byStatus?status=" + status)
             .contentType(APPLICATION_JSON))
@@ -219,26 +221,25 @@ public class PetControllerTest {
             .andExpect(jsonPath("$.errors", hasSize(1)))
             .andExpect(jsonPath("$.errors[0].code", is("1005")))
             .andExpect(jsonPath("$.errors[0].message", is("Error while calling getPetsByStatus API from PetStore")));
-
     }
 
     private Pet preparePetForStatus(String status) {
         Pet pet = new Pet();
-        pet.setId(1);
+        pet.setId(1L);
         pet.setName("jack");
         pet.setStatus(status);
         pet.setPhotoUrls(List.of("https://photo.url.one", "https://photo.url.two"));
 
         Category category = new Category();
-        category.setId(1);
+        category.setId(1L);
         category.setName("cat1");
         pet.setCategory(category);
 
         Tag tag1 = new Tag();
-        tag1.setId(1);
+        tag1.setId(1L);
         tag1.setName("tag1");
         Tag tag2 = new Tag();
-        tag2.setId(1);
+        tag2.setId(2L);
         tag2.setName("tag2");
         pet.setTags(List.of(tag1, tag2));
 

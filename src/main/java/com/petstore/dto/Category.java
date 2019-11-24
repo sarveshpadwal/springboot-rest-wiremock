@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @ApiModel(description = "All details about the category.")
 public class Category {
     @ApiModelProperty(notes = "The id of the category", position = 0)
-    private Integer id;
+    private Long id;
 
     @ApiModelProperty(notes = "The name of the category", position = 1)
     private String name;

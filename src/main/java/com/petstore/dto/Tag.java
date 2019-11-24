@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @ApiModel(description = "All details about the tag.")
 public class Tag {
     @ApiModelProperty(notes = "The id of the tag", position = 0)
-    private Integer id;
+    private Long id;
 
     @ApiModelProperty(notes = "The name of the tag", position = 1)
     private String name;

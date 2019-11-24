@@ -13,4 +13,6 @@ import java.util.List;
  */
 public interface PetService {
     List<Pet> getPetsByStatus(String status);
+
+    List<Pet> getPetsByStatus(String status, boolean mockReponse);
 }

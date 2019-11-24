@@ -41,8 +41,11 @@ public class PetController {
         @ApiParam(value = "Pet status for which all pets will be retrieved",
             allowableValues = "available,pending,sold", required = true)
         @Valid @Pattern(regexp = "available|pending|sold", message = "1004")
-        @RequestParam(value = "status") String status) {
-        List<Pet> pets = petService.getPetsByStatus(status);
+        @RequestParam(value = "status") String status,
+        @ApiParam(value = "boolean flag to get mock response instead of actual PetStore API response",
+            required = false)
+        @RequestParam(value = "mockResponse", required = false) boolean mockResponse) {
+        List<Pet> pets = petService.getPetsByStatus(status, mockResponse);
         return new Response<>(Status.SUCCESS, HttpStatus.OK.value(), pets);
     }
 }

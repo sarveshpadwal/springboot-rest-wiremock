@@ -1,9 +1,6 @@
 HELP.md
 /target/
-/logs/
 !.mvn/wrapper/maven-wrapper.jar
-/src/main/resources/swagger2*.json
-/docs/jacoco/
 #flywayConfig.properties ### this should not be part of boilerplate, hence should be ignored using gitignore
 
 ### STS ###

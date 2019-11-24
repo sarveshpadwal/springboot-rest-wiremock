@@ -93,6 +93,17 @@
       <version>${springfox.version}</version>
     </dependency>
 
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-collections4</artifactId>
+      <version>${commons-collections.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.owasp.encoder</groupId>
+      <artifactId>encoder</artifactId>
+      <version>${owasp.encoder.version}</version>
+    </dependency>
+
     <!-- dependencies for testing -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -116,7 +127,7 @@
       <version>0.9.10</version>
       <scope>test</scope>
     </dependency>
-    <!-- For Contract Testing -->
+
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
@@ -125,6 +136,39 @@
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- wiremock dependency -->
+    <dependency>
+      <groupId>com.github.tomakehurst</groupId>
+      <artifactId>wiremock</artifactId>
+      <version>2.24.1</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>io.rest-assured</groupId>
+      <artifactId>rest-assured</artifactId>
+      <version>4.1.1</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>rest-assured</artifactId>
+          <groupId>io.rest-assured</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>io.rest-assured</groupId>
+      <artifactId>json-path</artifactId>
+      <version>4.1.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.rest-assured</groupId>
+      <artifactId>xml-path</artifactId>
+      <version>4.1.1</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -230,10 +274,8 @@
         <configuration>
           <skip>${jacoco.skip}</skip>
           <includes>
-            <include>com/backend/boilerplate/dao/impl/**</include>
-            <include>com/backend/boilerplate/service/impl/**</include>
-            <include>com/backend/boilerplate/util/**</include>
-            <include>com/backend/boilerplate/web/controller/**</include>
+            <include>com/petstore/service/impl/**</include>
+            <include>com/petstore/web/controller/**</include>
           </includes>
           <excludes>
             <exclude>${jacoco.exclude}*</exclude>
