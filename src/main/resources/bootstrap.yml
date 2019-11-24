@@ -1,9 +1,9 @@
 spring:
   application:
-    name: bootstrap
+    name: springboot-rest-wiremock
 aws:
   paramstore:
-    enabled: true
+    enabled: false
     prefix: /${ENV_NAME}
     failFast: true
-    name: bootstrap
+    name: springboot-rest-wiremock
